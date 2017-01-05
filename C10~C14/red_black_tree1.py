@@ -1,59 +1,68 @@
 import random
-import binary_tree
-from binary_tree import BinaryTree, BinaryTreeNode, tree_search, \
-    tree_minimum, tree_maximum, tree_successor, tree_predecessor, \
-    tree_height
+from binary_tree import BinaryTree, BinaryTreeNode
 
-class RBTreeNode(BinaryTreeNode):
-    def __init__(self, key = None, color = None, left = None, 
-                 right = None, p = None):
-        self.color = color
-        super(RBTreeNode, self).__init__(key, left, right, p)
+def inorder_tree_walk(x):
+    if x is not nil:
+        print(x.key, x.color)
+        inorder_tree_walk(x.left)
+        inorder_tree_walk(x.right)        
 
-nil = RBTreeNode(None,"black")
-binary_tree.nil = nil
+def preorder_tree_walk(x):
+    if x is not nil:
+        print(x.key, x.color)
+        preorder_tree_walk(x.left)
+        preorder_tree_walk(x.right)
 
-class RBTree(BinaryTree):
-    def __init__(self, root = None):
-        self.nil = nil
-        if root:
-            self.root = root
-        else:
-            self.root = self.nil
+def postorder_tree_walk(x):
+    if x is not nil:
+        postorder_tree_walk(x.left)
+        postorder_tree_walk(x.right)
+        print(x.key, x.color)
 
-    def insert(self, x):
-        rb_insert(self, x)
-    def delete(self, x):
-        rb_delete(self, x)
-    def rb_inorder_tree_walk(self):
-        inorder_tree_walk(self.root)
-    def rb_preorder_tree_walk(self):
-        preorder_tree_walk(self.root)
-    def rb_postorder_tree_walk(self):
-        postorder_tree_walk(self.root)
-
-
-def rb_insert(t, z):
-    #print("insert key =", z.key)
-    y = t.nil
-    x = t.root
-    while x is not t.nil:
-        y = x
-        if z.key < x.key:
+def tree_search(x, k):
+    while x is not nil and k != x.key:
+        if k < x.key:
             x = x.left
         else:
             x = x.right
-    z.p = y
-    if y is t.nil:
-        t.root = z
-    elif z.key < y.key:
-        y.left = z
+    return x
+
+def tree_minimum(x):
+    while x.left is not nil:
+        x = x.left
+    return x
+
+def tree_maximum(x):
+    while x.right is not nil:
+        x = x.right
+    return x
+
+
+def tree_successor(x):
+    if x.right is not nil:
+        return tree_minimum(x.right)
+    y = x.p
+    while y is not nil and x is y.right:
+        x = y
+        y = y.p
+    return y
+
+def tree_predecessor(x): 
+    if x.left is not nil:
+        return tree_maximum(x.left)
+    y = x.p
+    while y is not nil and x is y.left:
+        x = y
+        y = y.p
+    return y
+ 
+
+def tree_height(z):
+    if z is nil:
+        return 0
     else:
-        y.right = z
-    z.left = t.nil
-    z.right = t.nil
-    z.color = "red"
-    rb_insert_fixup(t, z)
+        return 1 + max(tree_height(z.left), tree_height(z.right))
+
 
 def left_rotate(t, x):
     y = x.right
@@ -84,6 +93,28 @@ def right_rotate(t, x):
         x.p.right = y
     y.right = x
     x.p = y
+
+def rb_insert(t, z):
+    print("insert key =", z.key)
+    y = t.nil
+    x = t.root
+    while x is not t.nil:
+        y = x
+        if z.key < x.key:
+            x = x.left
+        else:
+            x = x.right
+    z.p = y
+    if y is t.nil:
+        t.root = z
+    elif z.key < y.key:
+        y.left = z
+    else:
+        y.right = z
+    z.left = t.nil
+    z.right = t.nil
+    z.color = "red"
+    rb_insert_fixup(t, z)
 
 def rb_insert_fixup(t, z):
     #print("rb_insert_fixup, key=", z.key)
@@ -135,6 +166,7 @@ def rb_insert_fixup(t, z):
                 '''
                 z.p.p.color = "red"
                 left_rotate(t, z.p.p)
+
     t.root.color = "black"
 
 def rb_transplant(t, u, v):
@@ -230,25 +262,58 @@ def rb_delete_fixup(t, x):
                 x = t.root
     x.color = "black"
 
-def rb_inorder_tree_walk(x):
-    if x is not nil:
-        print(x.key, x.color)
-        inorder_tree_walk(x.left)
-        inorder_tree_walk(x.right)        
-
-def rb_preorder_tree_walk(x):
-    if x is not nil:
-        print(x.key, x.color)
-        preorder_tree_walk(x.left)
-        preorder_tree_walk(x.right)
-
-def rb_postorder_tree_walk(x):
-    if x is not nil:
-        postorder_tree_walk(x.left)
-        postorder_tree_walk(x.right)
-        print(x.key, x.color)
 
 
+class RBTreeNode(BinaryTreeNode):
+    def __init__(self, key = None, color = "None", left = None, 
+                 right = None, p = None):
+        self.color = color
+        super(RBTreeNode, self).__init__(key, left, right, p)
+
+
+nil = RBTreeNode(None,"black")
+
+class RBTree(BinaryTree):
+    def __init__(self, root = None):
+        self.nil = nil
+        if root:
+            self.root = root
+        else:
+            self.root = self.nil
+
+    def insert(self, x):
+        rb_insert(self, x)
+
+    def delete(self, x):
+        rb_delete(self, x)
+
+
+    def maximum(self):
+        return tree_maximum(self.root)
+
+    def minimum(self):
+        return tree_minimum(self.root)
+
+    def search(self, k):
+        return tree_search(self.root, k)
+
+    def successor(self, x):
+        return tree_successor(x)
+
+    def predecessor(self, x):
+        return tree_predecessor(x)
+
+    def inorder_tree_walk(self):
+        inorder_tree_walk(self.root)
+
+    def preorder_tree_walk(self):
+        preorder_tree_walk(self.root)
+
+    def postorder_tree_walk(self):
+        postorder_tree_walk(self.root)
+
+    def height(self):
+        return tree_height(self.root)
 
 
 if __name__ == "__main__":
@@ -278,9 +343,11 @@ if __name__ == "__main__":
     print("postorder tree walk: ")
     bt.postorder_tree_walk()
     '''
+
     for i in range(5):
         bt.delete(nodes[i])
 
+    
     print("inorder tree walk: ")
     bt.inorder_tree_walk()
     print("preorder tree walk: ")
