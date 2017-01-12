@@ -10,12 +10,7 @@ def quicksort(a, p, q):
 
 
 def random_partition(a, p, q):
-    #print("random_partition->p, q: ", p, q)
-    if p < q:
-        r = random.randint(p, q)
-    else:
-        r = p
-    #print("random_partition->r: ", r)
+    r = random.randint(p, q)
     a[r], a[q] = a[q], a[r]
     x = a[q]
     j = p - 1
@@ -28,10 +23,36 @@ def random_partition(a, p, q):
 
 
 if __name__ == "__main__":
-    nums = []
-    for i in range(0, 10):
-        temp = random.randint(0, 100)
-        nums.append(temp)
+    def dfs(g):  
+    for u in g.get_v():
+        u.color = "white"
+        u.parent = None
+    for u in g.get_v():
+        if u.color == "white":
+          dfs_visit(g, u)
+
+    def generat_dfs_visit():
+        time = 0
+        def dfs_visit(g, u):
+            time += 1
+            u.d = time
+            u.color = "gray"
+            for v in g.adj(u):
+                if v.color == "white":
+                    v.parent = u
+                    dfs_visit(g, v)
+            u.color = "black"
+            time += 1
+            u.f = time
+        return dfs_visit
+
+    def dfs_visit(g, u):
+        func = generat_dfs_visit()
+        func(g, u)
+        nums = []
+        for i in range(0, 10):
+            temp = random.randint(0, 100)
+            nums.append(temp)
 
     nums1 = list(nums)
 
