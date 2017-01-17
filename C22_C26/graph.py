@@ -13,10 +13,9 @@ class Structure():
 class Vertex(Structure):
     _fields = ['x', 'y', 'z']
     color = None
-    parent = None
+    p = None
     d = None
     f = None
-    name = None
     '''
     _fieldtypes = [float, float, float]
     
@@ -29,18 +28,19 @@ class NameVertex(Vertex):
     def __init__(self, name):
         self.name = name
 class Edge(Structure):
-    _fields = ['u', 'v']
-    _fieldtypes = [Vertex, Vertex]
-    def __init__(self, u, v):
+    #_fields = ['u', 'v', length]
+    #_fieldtypes = [Vertex, Vertex, float]
+    def __init__(self, u, v, length = None):
+        self.u = u
+        self.v = v
+        self.length = length
         '''
         if (u.x, u.y, u.z) == (v.x, v.y, v.z):
             raise ValueError("two endpoints of Edge object\
                 has the same coordinate")
         '''
-        super(Edge, self).__init__(u, v)
+        #super(Edge, self).__init__(u, v)
 class Graph(Structure):
-    _vertexes = []
-    _edges = []
     def __init__(self, vertexes, edges):
         self._vertexes = vertexes
         self._edges = edges
@@ -68,23 +68,30 @@ class Graph(Structure):
         return self._edges
 class UnDirectedGraph(Graph):
     _fields = ['u', 'v']
-    #_vertexes = []
-    #_edges = []
-    def adj(self, v):
+    def adj(self, u):
         adj_vertexes = []
         for edge in self._edges:
-            if v is edge.v:
+            if u is edge.v:
                 adj_vertexes.append(edge.u)
-            if v is edge.u:
+            if u is edge.u:
                 adj_vertexes.append(edge.v)
         return adj_vertexes
+    def find_edge(self, u, v):
+        for edge in self._edges:
+            if (u is edge.u and v is edge.v) or \
+               (u is edge.v and v is edge.u):
+               return edge
 class DirectedGraph(Graph):
-    def adj(self, v):
+    def adj(self, u):
         adj_vertexes = []
         for edge in self._edges:
-            if v is edge.u:
+            if u is edge.u:
                 adj_vertexes.append(edge.v)
         return adj_vertexes
+    def find_edge(self, u, v):
+        for edge in self._edges:
+            if u is edge.u and v is edge.v :
+               return edge
 
 
 

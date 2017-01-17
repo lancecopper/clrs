@@ -7,7 +7,7 @@ def bfs(g, s):
     for u in temp_v:
         u.color = "white"
         u.d = float("inf")
-        u.parent = None
+        u.p = None
     s.color = "gray"
     s.d = 0
     s.p = None
@@ -19,16 +19,16 @@ def bfs(g, s):
             if v.color == "white":
                 v.color = "gray"
                 v.d = u.d + 1
-                v.parent = u
+                v.p = u
                 q.append(v)
         u.color = "black"
 def print_path(g, s, v):
     if v is s:
         print ("vertex", s.name, end=' ')
-    elif v.parent is None:
+    elif v.p is None:
         print ("no path from", s, "to", v, "exists")
     else:
-        print_path(g, s, v.parent)
+        print_path(g, s, v.p)
         print("vertex", v.name, end=' ')
 
 if __name__ == "__main__":
@@ -45,10 +45,7 @@ if __name__ == "__main__":
     g = UnDirectedGraph(v, e)
     bfs(g, v[1])
 
-    n_root = list(v)
-    n_root.remove(v[1])
-
-    for vertex in n_root:
+    for vertex in v:
         print("path from vertex", v[1].name, "to vertex", vertex.name)
         print_path(g, v[1], vertex)
         print("\n")

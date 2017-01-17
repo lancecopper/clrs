@@ -3,11 +3,11 @@ from dfs import dfs
 import random
 
 
-
 def topological_sort(g):
     dfs(g)
     vertexes = g.get_v()
     quick_sort_final(vertexes, 0, len(vertexes) - 1)
+    vertexes.reverse()
     return vertexes
 
 def quick_sort_final(vertexes, p, q):
@@ -42,7 +42,6 @@ if __name__ == "__main__":
              Edge(socks, shoes)]
     g = DirectedGraph(vertexes, edges)
     results = topological_sort(g)
-    results.reverse()
     for result in results:
         #print(result.name, result.d, result.f)
         print(result.name, end = ', ')
