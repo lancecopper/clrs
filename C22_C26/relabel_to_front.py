@@ -20,7 +20,7 @@ class StreamGraph(DirectedGraph):
             temp_adj_vertexes = []
             for edge in edges:
                 if u is edge.u:
-                    temp_adj_edges.append(edge)
+                    temp_adj_edges.append(edge) 
                     temp_adj_vertexes.append(edge.v)
                     temp_r_adj_edges.append(edge)
                     temp_r_adj_vertexes.append(edge.v)
@@ -51,7 +51,6 @@ class LinkedList():
                 break
     def next(self, node):
         return self._next[node]
-
 def discharge(u, g):
     while u.e > 0:
         v = u.current
@@ -62,7 +61,6 @@ def discharge(u, g):
             push(u, v, g)
         else:
             u.current = u.n.next(v)
-    
 def relabel_to_front(g, s, t):
     initialize_preflow(g, s)
     vertexes = g.get_v().copy()
@@ -78,7 +76,6 @@ def relabel_to_front(g, s, t):
         if u.h > old_height:
             l.move_front(u)
         u = l.next(u)
-        
 if __name__ == "__main__":
     temp_globals = globals()
     vertexes = []
