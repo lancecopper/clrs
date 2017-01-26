@@ -133,6 +133,7 @@ def initial_simplex(arga, b, c):
     l = k + n
     argn, argb, arga, b, c, v = pivot(list(range(n)), list(range(n, n + m)), \
         a_aux, b, c_aux, 0, l, 0)
+    '''
     print("get from pivot:")
     print("argn:", argn)
     print("argb:", argb)
@@ -140,6 +141,7 @@ def initial_simplex(arga, b, c):
     print("b", b)
     print("c", c)
     print("v", v)
+    '''
     #while loop copied from simplex
     delta = [float("inf")] * (m + n)
     calc_num = 0

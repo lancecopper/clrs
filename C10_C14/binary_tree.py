@@ -1,13 +1,9 @@
 import random
-
 nil = None
-
 def testnil():
     print(nil)
-
 '''
 from hash_table import Node
-
 
 def tree_search(x, k):
     if x is None or k == x.key:
