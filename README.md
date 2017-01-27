@@ -52,7 +52,7 @@ title: clrs算法整理
 * search, minimum, maximum, successor, predecessor, insert, delete的运行时间位O(h)，h为树高。
 * 随机构建的二叉树，树高h期望为O(lgn)
 
-####　红黑树
+#### 红黑树
 * 红黑树是平衡树，树高为O(lgn)
 * search, minimum, maximum, successor, predecessor操作同普通二叉树
 * insert和delete较复杂，但时间度也仅为O(lgn)
@@ -90,7 +90,7 @@ title: clrs算法整理
 or {max(c[i,j-1], c[i-1,j]) if: i,j>0 and x[i] != y[i]}
 * 最长二叉搜索树 e[i, j] = e[i, r-1] + e[r + 1, j] + w(i, j)
 
-####　贪心算法的一般步骤
+#### 贪心算法的一般步骤
 * 确定问题的最优子结构
 * 设计一个递归算法
 * 证明如果我们做出一个贪心选择，则只剩下一个子问题
@@ -98,7 +98,7 @@ or {max(c[i,j-1], c[i-1,j]) if: i,j>0 and x[i] != y[i]}
 * 设计一个递归算法实现贪心策略
 * 将递归算法转换为迭代算法
 
-####　例子
+#### 例子
 * 活动选择问题 c[i, j] = max{c[i, k] + c[k, j] + 1}
 * hoffman编码:　每步策略:将频率最低的两个字符合成为一个字符求解新的hoffman树
 
@@ -114,7 +114,7 @@ or {max(c[i,j-1], c[i-1,j]) if: i,j>0 and x[i] != y[i]}
 * 图拟阵
 * 矩阵拟阵
 
-####　具体应用例子
+#### 具体应用例子
 * 最小生成树问题转化为加权拟阵最大权重独立子集问题，用贪心算法求解。
 * 单位时间任务调度问题(最小化延迟任务惩罚=最大化提前任务惩罚值和)
 
