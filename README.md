@@ -55,7 +55,7 @@ title: clrs算法整理
 
 
 ###  数据结构的扩张
-#### 例子：　order static red and black tree
+#### 例子：　order-statistic red and black tree
 #### 例子：　interval red and black tree
 #### 扩张数据结构的一般步骤:
  * 选择一种基础数据结构
